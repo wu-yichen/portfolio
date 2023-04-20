@@ -54,7 +54,9 @@ def work1():
     if request.method == "POST":
         data = request.form
         input_text = data["user_input"]
-        return Response(stream(input_text), mimetype="text/event-stream")
+        response = Response(stream(input_text), mimetype="text/event-stream")
+        response.headers["X-Accel-Buffering"] = "no"
+        return response
 
     return Response(None, mimetype="text/event-stream")
 
