@@ -1,30 +1,31 @@
 import os
 import openai
 from flask import Flask, render_template, redirect, request, Response
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.vectorstores import Chroma
+
+# from langchain.embeddings.openai import OpenAIEmbeddings
+# from langchain.vectorstores import Chroma
 
 
 app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
-embeddings = OpenAIEmbeddings(openai_api_key=os.getenv("OPENAI_API_KEY"))
-persist_directory = "database/"
-docsearch = Chroma(embedding_function=embeddings, persist_directory=persist_directory)
+# embeddings = OpenAIEmbeddings(openai_api_key=os.getenv("OPENAI_API_KEY"))
+# persist_directory = "database/"
+# docsearch = Chroma(embedding_function=embeddings, persist_directory=persist_directory)
 
 
-def gen_prompt(docs, query) -> str:
-    return f"""To answer the question please only use the Context given, nothing else. Do not make up answer, simply say 'I don't know' if you are not sure.
-Question: {query}
-Context: {[doc.page_content for doc in docs]}
-Answer:
-"""
+# def gen_prompt(docs, query) -> str:
+#     return f"""To answer the question please only use the Context given, nothing else. Do not make up answer, simply say 'I don't know' if you are not sure.
+# Question: {query}
+# Context: {[doc.page_content for doc in docs]}
+# Answer:
+# """
 
 
-def prompt(query):
-    docs = docsearch.similarity_search(query, k=4)
-    return gen_prompt(docs, query)
+# def prompt(query):
+#     docs = docsearch.similarity_search(query, k=4)
+#     return gen_prompt(docs, query)
 
 
 def stream(input_text):
